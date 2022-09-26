@@ -1,0 +1,22 @@
+Q1: Return the max sibling of N
+
+Q2: Implement an operation machine using stack. From 1point 3acres bbs
+
+Q3: Fraction to Recurring Decimal （利口原题）
+
+Q4: Sparse decomposition
+
+1.给一个弱智程序debug
+代码有corner case没考虑到
+最多改两行
+
+2.给一个数组
+输出 数组中有比他大1 的数字的个数
+
+比如[0,2,2,3,3,4]  = 4（2个2 2个3）
+[0,2,4] = 0
+
+3. 给一个数组
+操作一个数使他变成不下降序列
+无解 输出0
+有解 输出总解数

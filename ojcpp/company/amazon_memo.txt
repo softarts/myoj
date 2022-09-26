@@ -1,0 +1,304 @@
+amazon
+LC973 第一题是最常见的找最近的X个地址，用一个堆就能过所有test case。
+LC490 maze 类似 第二题稍微不常见，给一个grid，1代表可走，0代表障碍，9代表目的地
+lc572 easy subtree
+LC?? Longest palindrome
+
+LC340 LINT386 Substring with distinct k hard (20minutes)
+LINT1369 LC819 Most common word easy TBD
+LINT533 Two sum closest 
+LINT613 High five
+LINT596 Subtree with Maximum Average easy
+LINT1377 Find substring
+
+lc064 min path sum medium
+Close two sum 533
+Subtree with Maximum Average 597
+High 5 613,
+Find substring 1377
+K closest point 612,
+Cut off trees for golf event  1092
+Substring with distinct k 386
+Longest substring without repeating character 384,
+Closet target Value 1478,
+BST Node distance  1561,
+Most common word 1369
+
+LC543?
+
+2018-7
+BST 那个先建个树, 然后找LCA,然后算距离. K个不同字母的substring就是sliding window
+我大概总结了一下。 目前从面经来看亚麻的OA有好几套题目。有的人依然是老题，most common word和log排序，但是变一下。这个面经太多了不发link了。
+有的人的新题是算top k个离用户最近的餐厅， 和类似2sum closest的题目。第二题目前我看到两种，一个是说飞机去和回里程的，一种是说前后端程序运行的。本质都是一样的题目：给一个最大数，要求在两个list中找到相加最接近这个数的所有pairs。「面经点这里」softarts，本帖隐藏的内容需要积分高于 188 才可浏览，您当前积分为 0。 
+查看如何攒积分 Click here for more info.%5Bvalue%5D%3D5%26searchoption%5B3046%5D%5Btype%5D%3Dradio%26sortid%3D311" target="_blank">面经」
+
+我所有的题目都准备了，结果没有准备自己被OA的题，当时就慌了，脑子全是浆糊根本理不清思路。时候想想其实并不难。做完OA之后还有很长（8页？）的BQ选择题问题。好好答。
+
+lc658 kcloset element
+
+https://1o24bbs.com/t/topic/3152
+无人机送货
+
+https://www.jianshu.com/p/8d4325d9b539
+
+23280666915535
+
+
+小土刀，很多题。https://wdxtub.com/interview/14520850399861.html
+做过的lintcode 里类似的题目：
+
+
+https://www.1point3acres.com/bbs/forum.php?mod=viewthread&tid=485818&extra=page%3D2%26filter%3Dsortid%26sortid%3D311%26searchoption%5B3086%5D%5Bvalue%5D%3D9%26searchoption%5B3086%5D%5Btype%5D%3Dradio%26searchoption%5B3089%5D%5Bvalue%5D%5B5%5D%3D5%26searchoption%5B3089%5D%5Btype%5D%3Dcheckbox%26searchoption%5B3046%5D%5Bvalue%5D%3D5%26searchoption%5B3046%5D%5Btype%5D%3Dradio%26sortid%3D311%26orderby%3Ddateline
+Max sum pair，输入是两个List<List<Integer>>，第一个数是ID，第二个是Value，还有一个maxCapacity，返回所有pair。
+第二题做完15个test cases有3个没过，然后想了下，应该是有重复值的时候没考虑到，改了代码，再跑，还是显示只过12个。到最后还剩18分钟，放弃了，准备返回第一题加点注释，结果显示连接失败，2分钟后再登录。等重新登录回来，第二题考虑重复值的代码不见了，时间变成还剩48分钟，这时候想之前一直不过是不是连接问题。马上加上刚才的代码，再跑，果然15个全过了。
+
+
+K nearest points ok
+Two sum closest ok
+K distinct substring(有各种变形，比如k-1个distinct characters，比如不限制substring长度) ok
+Highest five ok
+Longest palindrome ??
+Maximum average subtree ok
+Maze(给一个2D matrix，0代表路，1代表墙，终点是9，问可不可以到达终点。另一个变形是到达终点的最短路径) ok
+Most common words(给一个String，一个blacklist，返回不在blacklist里面并且出现频率最高的词)
+
+
+／／onsite
+被猎头linkedin 3撩面试，OA后拖拖拉拉了接近一个月才onsite，面试前就已经确定不会去他们这了，不过是最早开始的一家，想想还是去面一下吧，顺便套点信息出来回馈地里。
+
+我面的是Sunnyvale的Amazon lab126组下面的Alexa smart home组，楼很漂亮工位也不错，就是食堂不免费。
+
+
+
+10:00 - 11:00 白人hiring manager, 三姐manager shadow interview。全程bq一小时。服了。尬聊一小时，口干舌燥。
+11:00 - 12:00 似乎是中国大姐，亚裔小哥shadow不确定哪国人哪国裔，bq 15分钟，第一道题linked list 两个做addition划水，
+第二道题给一个void * ptr指向一块memory还有一个int代表frame count，memory里面有很多frame，每个frame前四个是32bit的元素，后两个是16bit的元素。
+让把所有frame里头后两个16bit的元素给提取出来返回。楼主melloc了一个ptr，然后针对对应的位置做memcopy，感觉主要是考底层c/cpp。
+12:00 - 1:00 台湾裔大哥带吃饭，点了个双层牛肉大汉堡加牛油果加薯条，还买了瓶椰汁饮料，久违的肥宅快乐餐，加额外肉的至尊升级，开心。反正是公司请客，不客气了！
+小哥很娇羞的说让我用receipt领完汉堡以后把receipt还给他，他要报销，因为他们没有免费午餐。吃完饭我说我可不可以不散步了，想回去睡一会，不然吃了这么多碳水下午困，
+小哥说没问题，送我回去了，大概12:40左右，这是这轮面试以来最开心的一次午饭了，吃的爽又快，避免了尬聊。
+12:50和人打了个电话。。说起来没完没了。。把1点的面试官关在外面了10分钟。。面试官1:10才进来。。
+1:10 - 2:00 三姐bar raiser，因为被我关了10分钟，进来就是大黑脸很生气的样子，楼主谎称我的manager有紧急bug给我打电话，实在不好意思。
+大姐依然怒气不减。快速过了5分钟bq，然后算法题是给一个unique int array，返回所有的可以构成一个sum target的combination。
+楼主就sort了一下稍微trim一下搜索范围，然后recursion dfs搞定，然后楼主说如果不是要具体的combination结果，只要count的话可以dp做。
+聊了聊时间复杂度。发现还剩下不少时间，大姐似乎怒气消了不少，又开始问bq，楼主模仿印度兄dei们说话时候开心晃脑袋的样子和大姐扯淡，
+似乎拉近了和大姐的距离，最后大姐喜笑颜开，楼主又道歉说不好意思耽误了十分钟，大姐说没事反正正常也要留给你一些时间问问题，耽误时间了你少问点也没啥，
+我准备的问题都问完了。
+2:00 - 3:00 印度小哥 + 白人不苟言笑小哥。白人小哥似乎经常健身胳膊还挺粗，不过也没有每天健身的楼主强壮，楼主气场再次胜利！
+第一题要实现一个数据结构class，在这里只能用一个数据结构实现两个stack，也就是要用一个array或者list来实现。
+楼主就偷懒说我用一个array分区使用实现两个stack吧，2个stack的size都是固定的，小哥说虽然一般stack没有size限制，但是你先写吧，楼主就写了，并且假设是int stack。
+两个stack都要有push和pop功能，简单来说就是两个ptr分别指向array不同部分，左部分是第一个，右部分是第二个，注意ptr操作，问题不大。
+小哥如何做到不只支持int，楼主说用T做generic。小哥说如果把size固定问题解决，楼主说用ArrayList。然后第二题，梨扣 伞伞，秒了，印度小哥要楼主写几个testcase过一遍。
+3:00 - 4:00 印度小哥 + 白人大哥 system design。说好的停车场，说好的tinyurl呢？既不是ood也不是web app的design！竟然是一道和rtos相关的design，果然是lab126啊就是有特点。无奈楼主有高达，在学校里上过rtos，自己写过rtos烧在TI嵌入式板子上，所以听到题以后不但没有虚，反倒挺高兴。下面进入正题。小哥说我们有一个api有个function叫button_event(button b1, operation o1, time t1)，我们一共有4哥button，第一个input是哪个button，第二个是press或者release，第三个是事件发生的时间。那么你设计一个module，通过收到的button_event来判断当前四个button的按下情况，然后显示在LCD上。楼主说可以设计一个interrup hanlder，然后每次button_event都会触发这个interrupt，interrupt会去连接四个button的GPIO pin上读当前的button数值，然后把这个数值通过call LCD write来写到LCD上。小哥说你这个design太低层了都到GPIO了。。而且operation和time的信息你都没用啊。楼主就说那先设计一个Status class存4个button对应的01值的int pattern以及status的时间，然后设计一个interrup hanlder，每次收到button_event都会触发这个interrupt，这个interrupt根据之前一个状态的Status，配上这次operation是press还是release，把之前状态中对应的bit设置成1或者清0，然后配上时间生成新的Status，把这个Status放到一个Queue里。在thread里加一个thread叫listener的，每隔一段时间就监控一下Queue里是不是有东西，如果有东西的话就把那个status拿出来，根据status里面的button pattern去唤醒LCD write thread。小哥说你这个是一个produce/consume模型啊，能不能简化一下。楼主说那就不要listener thread了，干脆把LCD_write放到sleep thread queue里头，然后在interrupt_handler里面发现status照之前status改变的话，就signal一个mutex，然后LCD_write在sleep queue里头就等这个mutex，等到了就进入thread queue里头去，priority低一点因为LCD_write的overhead很大，如果starving了就aging解决，而且绝对不能在interrupt_handler里面操作LCD_write（楼主在course project这么干过，LCD write太慢会造成很多个interrupt完成不了，把function stack越堆越高最后炸掉）。小哥们似乎还挺满意，又问了下如果极端情况用户手速极快，你这个方法会不会炸掉，楼主说为了写保护可以加个lock啥的。
+
+面试完就撤了，真的累。可以暂时休息一阵了。
+觉得有用就啊！看贴不攒不到人品啊！
+
+第一轮, 系统设计+ 15mins bq, 设计Twitter的timeline, [请大神帮忙看看]
+上来先bq, disagree问题, I:  project is using hibernate,  I suggest to use spring data instead of old design, the benefit is convenient and efficient (templates ), the result is group disagree my idea,
+I disagree but commit to it (amz principle), and in the future, and we have extra time we do the refactoring.
+the interviewer is confusing about it, I cannot clarify very well, shadow helps me to explain, spring data just add another layer.
+这块 解释的不好, 自己需要仔细搜搜如何解释 spring data 和 hibernate (其实都是orm)
+系统设计 twitter
+我照本宣科地说了 qps等计算, 算出了 40M/s 感觉这块完全是多余自己提, 面试官不感兴趣好像 [留个疑问在这里, 系统设计这种
+softarts，本帖隐藏的内容需要积分高于 188 才可浏览，您当前积分为 97。
+查看如何攒积分 Click here for more info.
+jpg" target="_blank">www.google.com/aa.jpg 作为key, 内容作为 value,  in-memory cache,  可以考虑用db作为数据backup
+之后问了我 lru , 我给出了算法设计 (最佳解)
+问高频查询情况, 给了lfu
+面试官total agree, 很开心
+这轮感觉不会有问题, 不过传说中的 bar raiser 过了就没事, 应该是童话故事.
+第四轮
+ood , 主要考继承 抽象类
+bq 问我性能和可读性 怎么考虑
+我脑抽的说了 先尽量搞定性能, 我其实是英语没听太懂, bq最难的其实就是英语!
+
+希望给大家点帮助, 个人建议, 面试官良莠不齐, 一定要跟住对方的思路和方向, 已经查考点, 你即使知道各种fansy, 他可能只考你 class level的基础.
+
+第一轮印度manager 女的，问了一堆bq，然后给了个maximum profit trading stock.很简单，我答出来了，分析完代码写完，她点点头。
+第二轮bar raiser，视频面的，一个12年经验的印度人，他在西雅图，给的design的题，先是ood问Amazon的主页有很多produc，怎么分类，都怎么做，然后问道了系统设计怎么存储。扯了一堆，代码写了一堆，最后他一直说cool, cool, cool. 然后一堆bq. 1point3acres
+
+第三轮白人姐姐，string calculator，一堆bq
+第四轮是印度小弟弟，bq一堆，然后是一个topological sort.
+
+
+2019(1-3月) 码农类General 硕士 全职@Amazon - 猎头 - Onsite  | Other | 在职跳槽
+先是被猎头在linkedin上ping了，然后聊了一下，在线做了一个oa，然后说要约电面，后来说有hiring event，可以直接去，不用电面了，于是就参加了hiring event，是alexa search啥组的
+3.15的hiring event，下午一点开始，每场1小时，总共四场可以自己带电脑，也可以白板。电脑的话给了一个链接，在上面两人都可以看到，但是没有编译功能
+
+第一场，印度人，聊聊简历，一堆的bq，然后开始做题，给定一个二叉树，和一个数字，把所有综合小于该数字的路径都删掉。比如
+      3
+    /   \
+   2     1
+  /  \  /  \
+3  1  1  3
+给定数字  7
+
+那么从左到右的四条路径  3 - 2 - 3， 这条大于 7， 保留。   3 - 2 - 1，这条只有6， 要删除，但是由于3-2已经是之前的有效路径，所以只删除1
+右边两条 3 - 1 -1 不行 3- 1 -3，可以， 所以 删除一个1，最后返回这个：. 1point3acres
+      3
+    /   \
+   2     1
+  /         \
+3          3
+
+大概有30-35分钟左右来做这个题吧。
+
+第二场，不知道为什么两个人，好像是shadow，一个美国人，一个不知道哪里的。还是谈简历，问bq，不过这两个人问的bq比较少，大概有40分钟做题
+题目是蠡口舞陆，合并区间，20分钟讲完写完，应该没问题，但是还剩下20分钟，很尴尬，然后面试官只好强行让我在自己做个测试例子，然后跑给他们看，最后还有10分钟，我又强行讲了一下自己的简历，然后实在不行，提前5分钟结束了。。。
+
+第三场，是个印度manager，挺能尬聊的那种，讲简历和bq说了30分钟，最后30分钟让我设计一个在线下棋系统。设计一个网站，可以两个人同时下棋，下棋的逻辑的引擎我不用考虑，就考虑整体的设计。我其实没怎么准备过设计题，所以就在那里跟他瞎扯，最后画了一个大概。最后10分钟，我们纠结于怎么确定需要的服务器的数量。我说根据我的经验，做perf test然后看我们要解决多大的问题，然后得出要多少机器。但是这不是他想要的答案，他一直push我让我从另外的角度想，问我可以监测哪些数据，但是我实在没get到，只说了一些延迟啥的。最后五分钟他只好自己解释了一下，其实他大概想要的是通过设置一些metric，然后监测着，然后通过数据的变化predict出负载要满，需要更多机器。其实最后我还是没太懂，但是大概感觉是想通过收集数据然后machine learning或者套用什么模型，然后做出预测的一种办法吧，这个可能跟他们组的做的东西有关，我确实也没有这种思维。。。。。
+
+第四场，美国人，还是老规矩，25分钟左右的BQ和简历吧，然后开始做题。 给定一个目录，和一些规则，输出所有符合规则的文件。 规则现在可以只考虑两条，一是文件名，比如所有txt的文件，二十大小，比如只输出特定大小区间的文件，但是以后可能有更多规则
+我的做法是先设计了一个RuleBase，带有一个isvalid的函数，然后实现了两个规则RuleNameMatch和RuleFileInSize来extend RuleBase，然后写了一个api，List<File> getAllFilesMatchRules(String directory, RuleBase[])，我说我不知道咋获取directory下的所有文件，只有假设了一个api，List<File> getAllFilesInDir(String directory)，有了这个就比较简单了，遍历所有文件，对每个文件，遍历所有rule，有一个不valid，就跳过剩下的，所有都符合，就加入结果。
+
+大概写了这么一个东西，然后面试官说现在的所有规则是And，怎么变成or，要可以切换。然后我就说改一下api，wrap一个ruleManager，里面有rule[]，还有一个flag来指定rule之间的关系，没有实现，就讲了一下。
+最后还有五分钟左右，让我自习实现一下RuleFileInSize规则，要可以自定义  小于， 小于等于， 大于， 大于等于，以及(], [)， 都没有什么难的，说的通就行。
+
+
+
+最后最后，求大米........
+
+
+技术部分：
+第一轮：蠡口 舞嗣伞  LC543
+第二轮：设计一个分布式系统，管理联系人。
+    功能有：每个用户（有user_id）可以上传所有的联系人（包括姓，名和电话信息）；对于某个user_id，返回所有的联系人；对于某个电话，返回含有这个电话联系人的所有user_id。
+第三轮：OOD，设计一个狗DayCare，主要需要实现的方法就是给一只狗，决定放到哪个房间。
+    已知信息有：每种狗具有一些属性，比如年龄，尺寸，性别，是否烈犬，是否哺乳，是否接种疫苗等等；狗DayCare有三种房间：小狗房，大狗房，和单独狗笼房。
+    狗的属性决定了它可以去哪种房间：没接种疫苗的不收；年纪很小的狗，烈性狗，哺乳期的狗优先去单独狗笼；除此之外的按照尺寸去大狗房或者小狗房。
+    判断去哪个房间的函数里不能用一串if else，因为扩展性不好。所以本质上应该是怎么设计condition以及对condition的判断
+    整体上跟停车场设计有类似之处。
+第四轮：背景prime member购物。
+    对于某个具体的产品，有不同商家给出offer，亚麻会给你默认给你推荐一个，设计针对某个商品的类，函数包括添加offer，获得最好offer并移除。
+    offer类具体成员有商家id，商家报价，list of该商家得到过的所有review值（1到5）。
+    最好offer的优先级是：平均review评分>价格>review的数量。
+    觉得用堆维护offer即可，结果白人面试官说不能直接用Java的PriorityQueue，要用的话必须自己实现。
+BQ没有专门一轮，但是每轮都有，都是常规问题：赶不上ddl，和上司意见不一致，work hard的经历，没有足够数据back-up idea等等
+
+
+
+========= BQ ========================
+https://www.thebalancecareers.com/behavioral-job-interview-questions-2059620
+
+赶不上ddl
+和上司意见不一致
+work hard的经历
+没有足够数据back-up idea
+
+//不得不说他们家面试是真的累！9:30-4:00时间上堪比Google，但其实比Google还要累，下面慢慢说。
+//9:30-10:00和hr印度大姐尬聊，大姐详细介绍了package的各项占比，以及面试时候各种behavior问题怎么答，各种苦口婆心，想想还是挺良心的，印度人也有不少好人啊！
+//下面介绍一下所有可能遇到的bq，好在楼主特别擅长扯淡，几乎没在bq上挂过(除了一家startup，和CEO聊的时候说需要package不能太低，自爆了哈哈)。
+
+1 你工作或者学习中遇到过和队友或者同事意见特别不相同的情况吗？你听他们的还是他们听你的？为什么？最后结果怎么样？
+2 你遇到过最难解决的技术问题是什么？如果几乎没有解决方案的话你是怎么做的？最后成功了吗？
+3 你有没有过ddl前需要做重大决定，这个决定可能造成你meet ddl，也可能造成不能meet ddl？你怎么做的，最后结果真么样？
+4 如果你的manager分配给你特别不喜欢的活你怎么办？
+5 如果你收到一份function specification照着做，里面很多点你不同意，你怎么和manager或者pm沟通？
+6 如果你写的function specification被很多人喷出很多问题，你怎么办？
+7 如果你很不同意你的manager的一些做法，你咋办？
+8 如果你的队友或者同事有些愿意比如病了或者家庭原因，干不完他们的活，你怎么办？
+9 如果你发现一个严重影响客户体验的bug或者问题，但这块不是你负责，你怎么办？
+10 如果你发现一个事非常模棱两可，比如function specification你觉得不清楚，或者一段old code你完全看不懂，你怎么办？
+11 你做过最难的project是什么，你负责管理和分配人力吗？
+总之在这里我遇到的bq是最多的，非常的夸张。楼主对付bq的方法是尽量把他们归类，然后试着把话题引到自己准备过的case上，然后尽量多说，牵这面试官走，还能避免说的太少他们问更多的问题。
+
+
+最后说BQ，不知道为什么这么多BQ，但是亚马同学说他们是有一些principle的，每次review都要套用这些principle，我估计面试官也是在套用这些principle，所以提前了解下比较好。
+比较常见的BQ：
+老板给你最差的评价是什么，
+Standard和delivery你选哪个，
+老板说不重要，你觉得超级重要怎么办，
+你做了哪些事不属于你的工作范围确很有意义之类的，
+
+Tell me about a time in which you disagreed with a coworker
+Tell me about your most challenging project that best showcases your skills for Amazon
+Tell me about a time in which you worked under a tight deadline
+
+//都不是很好答。不过其实这个问题是可以换的，面试官那里好像有很多问题，可能是HR给他们准备好了，所以如果你想不出来，可以换个问题。
+
+
+====  my answer ======
+STAR
+* most difficult situation
+* how do you handle challenge
+->  as a sw developer, most of time will be only yechinical issue. but I remember one of the most difficult situation
+if it involve technical issue as well as facing customeer complaint and under huge pressure.
+
+situation:
+in agilent, new product got Occasionally crash, as it is at remote site, hard to reproduce issue and difficult to online debug
+1. impact the bussiness.
+2.difficult to communicate with US site.
+we could not communicate during the asian day time, but instead wait till night or next day for a reply. require work overnight
+3. technically it is hard to solve
+
+task:
+fixed the crash
+
+action:
+
+ came with a plan ->
+ 1.narrow the scope of problem, split into module,
+ 2.review the code and analysis the coredump, use valgrind to figure out the dangle pointer.
+ 3.setup the backup environment.
+ 4.discard raw ptr, move to c++11 (2011)
+
+result:
+isolate the suspected module, and rewrite some of the code.
+
+
+*have you make mistake,how to handle it?
+1.I rarely made mistake..carefully deal with my work, especially online service.
+just I need little time in a new environment
+
+2.when I joined current company , my first project is evaluate a product performance and see any chance to build a quality control
+platform to do it. I could overlook the second part and spent too much time on first part and miss inside(because it is a tremendous project)
+because my department is infrastrcture dept, mission is to build the common platform(computing/training/storage/testing)
+but because I keep communicated with my boss frequently, understand what he is thinking and I quickly find the way.
+need to think big, in a bigger picture. ensure to understand clearly the team top priority
+
+
+*老板给你最差的评价是什么
+early stage of my career,many years ago
+I am a bit shy at that time. don't know communicate with colleagues.
+I was assigned to a support department, as a fresh grad I couldn't support too much thing. and it is critical Network element.
+manytimes I don't have permission to change it. so I got low ranking at the first half year.
+I realize I'd like to be programmer. and I found shortcoming is I am not good at communication.
+
+
+
+*disagree with some one at work/boss
+I treat work as work, very professional. my colleagues will be as well.
+I would talk with the person to understand the reasons behind, provide data metrics, reference to support my point of view
+I will put me on the same page as senior colleagues, my boss.if I insist I am right I could discuss with them later.
+as tiem being I could gain more knowledge to have a different understanding.
+
+
+
+*teamwork
+I am in infra dept. the mission is pursuafe other dept(product dev,research) to use our solution to facilitate dev, improve
+productivity.
+teamwork is very important and we very serious about it. as we want to ask others to use common platform/tools/platform/code reusable
+I must achieve it firstly. I will share different kinds of solution among team. when I work with other team and come up with some idea/
+solution I also whare with team member so that we can improve our solution.
+
+
+#decision
+ is a startup. and offline product. many team still use old school develop method. e.g. slow release procedure.
+manually do test. no CD last year.
+I push my cooperated team to change to devops mode, and also prepare for cloud based product.
+many people think it is big change but anyway they see the benefit after I give them training, presentation.
+
+I am also very grateful the company made same decision to move towards EP(Engineering Productivity)
+
+
+*你做了哪些事不属于你的工作范围确很有意义之类的，
+
+*你有没有过ddl前需要做重大决定，这个决定可能造成你meet ddl，也可能造成不能meet ddl？你怎么做的，最后结果真么样？
+
+
+
+
+
+
+
