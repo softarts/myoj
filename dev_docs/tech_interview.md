@@ -1170,6 +1170,7 @@ Size of Largest possible set in array the sum no greater than K
 思路，对于数组问题，尽可能使用O(N)j解决
 
 ##	BAML
+2017/7
 Introduction,why financial area,javafx,
 we can directly query on website(morningstar), why need a framework? ->not free data, some special chart.
 
@@ -1278,7 +1279,7 @@ std::cout << Array<int>().size() << '\n';
 
 
 **2020/05**
-
+creditsussie?
 可能没有顺序，整理了一下
 有哪些创建thread的方式-> new thread, async,pthread_create,但是这个答得不好，有点具体忘了
 mutex 有哪几种，提到了lock_guard,unique_lock,readwritelock,具体还是再去看一下比较好
@@ -1371,6 +1372,8 @@ jdsu的项目，架构
 
 ## amazon
 2019-3-19
+OA
+
 coding
 LC210 course schedule2
 first non-repeat element [a,b,1,a,b,2,c,d]  => 1
@@ -1653,7 +1656,7 @@ sabre
 volatile什么意思
 atomic 同步手段
 top,netstat, memory usage,
-gdb debug java application，能否看到stack?
+gdb debug java application，能否看到stack?==>native part only
 
 //TODO
 computeAll(List<Integer> result) {
@@ -1661,7 +1664,13 @@ computeAll(List<Integer> result) {
   //tight loop
 }
 
-todo 能否连续用两个map来形成管道？collect(Collectors.toList())
+todo 能否连续用两个map来形成管道？
+```
+collect(Collectors.toList())
+collect(toCollection(LinkedList::new))
+collect(toMap(Function.identity(), String::length))
+collect(joining());
+```
 可以用parallelStream()->更方便,但是线程数是多少？(-1)
 能否中断
 如果有future的可以中断
@@ -1734,7 +1743,7 @@ exp: 192k(16)
 转去做golang server
 
 如何optimize system, linux-perf, framegraph，没提，可惜,这里有点瞎问，每个project的目标都不一样,latency
-
+实现vector
 
 ## goldman sachs
 就是做题
@@ -1887,7 +1896,7 @@ scalibility
 **2面**
 英文介绍, 优点-> 1.aws solution, 2.broad tech stack, 3.problem solving skill
 有全球各地支付用户，如何设计架构-> 多地多活（aurora, 多master,异步方式备份数据,不需要切换数据库failover，客户端直接改写的master）；单写(single master)多读，只读副本和备份， 
-->思考：如果一个用户同时在两个不同的master 写入了不同的数据，如何同步？(使用read-after-write consistency，或者强一致性，对性能有影响)
+->思考：如果一个用户同时在两个不同的master 写入了不同的数据，如何同步？(使用read-after-write consistency，或者强一致性，对性能有影响)?
 
 如果某个机房挂了，如何切换流量->API gateway重定向, route53根据地理位置做流量分配,在client侧放入路由选择代码(配置通过服务器更新)
 API gateway(路由，多版本，transformation/mapping), load balancer(服务注册), service/k8s
@@ -1921,7 +1930,7 @@ treemap如何搜索
 ubiquant 九坤
 笔试 lc198,36,以及一个IPC,两个service同步的设计题
 
-2面
+1面
 自我介绍->经历，技术栈
 kv项目介绍一下->对rocksdb的二次开发，基于grpc做了网络层，集群规模，这里扯了半天grpc(TODO**补充点grpc的信息**)
 =>最近没有多少关于c++的项目，一直提kv是否合适??**是否整理下语音项目**
@@ -1935,106 +1944,32 @@ kv项目介绍一下->对rocksdb的二次开发，基于grpc做了网络层，�
 
 算法题类似 lc210 courseschedule,但是没有给定义，写得还行
 
-# 数据库
+2面
+2+hr,2022/9/28
+如何参与一个SDLC过程=>举例, 人脸项目，从SDK封装到上层部署谈起
 
-Some question about general database knowledge, e.g. shared lock, exclusive lock, dirty read, transaction, 乐观锁，悲观锁
+如何解决并发问题，是有状态还是无状态的task=>无状态，但是肯定有全局的资源需要共享，使用concurrenthashmap
+concurrenthashmap实现=>分段锁，其余不知道
+使用的threadpool->自研
 
-## ACID
-原子性 一致性 隔离性 持久性
+如何决定SDK的baseline，性能=>吞吐量，延时,TPS，各种测试项
 
-## 乐观锁悲观锁
-例如多个用户同时并发在一个短视频评论时，他们需要
-1. 拿到ArticleID和评论数字
-2. 插入对应的Comment
-3. 更新评论数量保存到数据库
-由于他们是同时在步骤1拿到的评论数量，所以在第三步更新的评论数+1是错的。
+如何解决难题=>举例第三方infra的问题, 一些数据库的失同步，脑裂问题, API上就是表现间断性的失败率
 
-**乐观锁**
+如何解决和别人的分歧,说服和被说服 =>使用parser来分析配置数据,业务和技术的角度上说服别人接受自己的方案.这个回答没什么新意，令人耳目一新.
 
-乐观锁顾名思义就是特别乐观，认为自己拿到的资源不会被其他线程操作所以不上锁，只是在插入数据库的时候再判断一下数据有没有被修改。所以悲观锁是限制其他线程，而乐观锁是限制自己，虽然他的名字有锁，但是实际上不算上锁，只是在最后操作的时候再判断具体怎么操作。
-
-乐观锁通常为版本号机制或者CAS算法
-```
-JPA
-@Data
-@Entity
-public class Article {   
-    @Version
-    private Long version;
-}
-其它都一样,修改失败直接抛出异常 ObjectOptimisticLockingFailureException
-// CommentService
-public void postComment(Long articleId, String content) {
-    Optional<Article> articleOptional = articleRepository.findById(articleId);
-    article.setCommentCount(article.getCommentCount() + 1);
-    articleRepository.save(article);
-}
-
-或者手动增加column version
-public interface ArticleRepository extends CrudRepository<Article, Long> {
-    @Modifying
-    @Query(value = "update article set comment_count = :commentCount, version = version + 1 where id = :id and version = :version", nativeQuery = true)
-    int updateArticleWithVersion(Long id, Long commentCount, Long version);
-}
-```
-
-**悲观锁**
-需要查询的时候把该行锁住
-使用lock或者SQL中加入FOR UPDATE
-```
-JPA 
-public interface ArticleRepository extends CrudRepository<Article, Long> {
-    @Lock(value = LockModeType.PESSIMISTIC_WRITE)
-    @Query("select a from Article a where a.id = :id")
-    Optional<Article> findArticleWithPessimisticLock(Long id);
-}
-
-或者Query中手动加入 for update
-public interface ArticleRepository extends CrudRepository<Article, Long> {
-    @Query(value = "select * from article a where a.id = :id for update", nativeQuery = true)
-    Optional<Article> findArticleForUpdate(Long id);
-}
-```
-
-**实践**
-一般来说是两步操作,1.取得数据，2 该数据+1(或者其他操作) 3.写回数据库
-这个过程需要加锁
-如果说直接把数据写回去，好像不需要，写的时候会带锁,不可能出现分别写一列的情况
-
-
-## 四种隔离级别
-https://blog.csdn.net/fanrenxiang/article/details/102650127
-
-级别
- 1. 未提交读(Read Uncommitted):事务中的数据修改，即使事务未提交，对其他事务也是可见的。事务可以读取未提交的数据，也称为“脏读”。
- 2. 提交读(Read Committed)：事务开始时，只能看见已提交事务的修改。换句话说，一个事务从开始到提交之前，所作的任何操作对其他事务是不可见的。但是如果在事务执行过程中，有其它事务提交修改，那么前后两次读取相同记录的结果不相同（不一致），也称作不可重复读（nonrepeatable read）受其他事务影响
- 3. 可重复读(Repeatable Read)：事务中前后两次读取相同记录的结果是一致的，即使有事务提交。(不受别的事务提交的影响)。可重复读可以解决脏的问题，但是存在幻读（Phantom Read）的问题,当事务在读取某个范围内记录的时候，如果另外一个事务插入了新的数据记录，之前的事务中再次读取该范围内的数据记录，那么将会产生幻行（Phantom Rows）。InnoDB通过使用多版本并发控制MVCC解决了幻读的问题。   --不受其他事务影响，但是如何更新数据？
- 4. 可串行化(Serializable)：事务串行化执行。
-
-
-常见的几个问题解决方案
-1. 脏读 ->1 使用level2
-2. 不可重复读  ->开启事务后会看到2次不同的结果,事务A在事务B提交前后读取到不一样的数据 (默认)
-3. 幻读 ->MVCC 3 (与2相比侧重于innsert/delete操作)
-4. 何为幻行?
+交付=>一般sprint 2week,bugfixing一天能解决，但是肯定不需要改动太多代码,介绍了银行的流程，包括unit test, e2e,test evidence,rollback 比较繁琐。能否快速上线，比如一天内？=>
 
 
 
-## 锁
-个人认为锁与事务的隔离级别不存在任何关系，但是我们有时候经常被这两个概念弄混淆。
-锁与事务隔离级别都是为了保证在多线程并发环境下，数据访问的安全性。当时事务交叉执行时，如果不设置事务的隔离级别(事务存在还有意义吗？)，那么数据将会被不同事务轮访问和修改，执行结果无法预期。
-
-读锁（共享锁）：相互不阻塞，可以在同一时刻读取同一个资源，即在同一个资源上可以同时添加多个读锁。
-写锁（排他锁）：阻塞其他读锁或写锁，独占资源，在给定的时间内只允许一个用户写入。
-锁粒度：加锁对象（资源）的大小。锁粒度的大小影响的系统的并发性和系统开销。当锁粒度较小，可以提高资源的并发使用，但是也增加的系统加锁的开销。反之，锁粒度越大，并发度越低，
-表锁（table locks）：在整张表上进行加锁，如MyISAM引擎。
-行锁（row locks）：在表中的一行或者多行数据记录上加锁。
-页锁（page locks）：目前只有BDB存储引擎使用。
-元数据锁（Metadata Locks）：MySQL5.5中引入，应用在表的metadata上。当一个线程使用表的时候，将会锁定整张表的metadata信息，不允许其他线程修改表结构。
-
-
-1、加锁与解锁时机：当开始执行SQL，将会对一些数据进行加锁，如整个表，某些行，metadata信息。当sql执行完成，将会解锁，其他线程就可以开始申请使用资源。
-2、MySQL事务特性是由存储引擎提供的，如常用的InnoDB。一个事务由一个或者多个SQL组成，事务的隔离性进一步确保在多线程并发环境下数据的安全访问，直接决定事务中sql修改的数据在提交之前是否对其他事务是否可见。
+## boa
+2022/9/27
+自我介绍
+做题lc1048, 经验，首先明确solution不会太复杂
+找出关键点，如何判断是一个chain
+介绍个项目，如何做架构设计, 谈了整体架构，事件驱动，和一个具体的设计GRPC
+有点屁话多了，说什么c++解决string比较麻烦，其实没必要, 
+总体而言，题目没做好，类似高盛的面试，找了个不好的猎头，题目做的太水，莫名其妙的
 
 
 ## SQL
@@ -2225,8 +2160,6 @@ static_assert
 要求每个都要写出代码
 
 
-
-
 **Most challenge in performance optimization**
 
 **What does your current role and responsibilities entail?**
@@ -2411,16 +2344,22 @@ payment-service <---> outside payment service provider (paypal,stripe,adyen)
 fis-opf payment product, 支持fast API
 
 ## leetcode 分类精选
-array: 763
+array: 159(最长不重复子串hashmap),523(yitu),560(子数组和),763, 953(aliendict,fb),1048(longestchain,boa),
+
 backtracking: 17
-动态规划： 91(decodeways), 198(robber)
+动态规划： 53(AD,bytedance多次),55(jumpgame)91(decodeways), 198(robber), 198,322(硬币组合), 1143(最长公共子序列)
+
 图: 207
+并查集:547, 261(lint178)
+
 bfs:964
 dfs: 212(TLE)
-栈:1944
-树:98(验证bst),236
-dp:198,322, 1143(最长公共子序列)
-并查集:547
+
+栈,slidewwindow:1944, 862, 2104(单调栈)
+
+树:98(验证bst),236, 
+
+
 数学，位操作: 204(prime), 258(add_digits),260(xor)
 综合: 146(lcu)
 

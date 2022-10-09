@@ -63,8 +63,7 @@ C- WebLogicJtaTransactionManager
 
 ## how about kafka?
 kafka-client transaction api支持exact once
-
-
+spring-kafka利用了producer的transaction
 
 ## bean 生命周期
 componentscan
@@ -72,10 +71,69 @@ componentscan
 beanpost processor, initialize
 
 
+# Core Java
+## hashcode/equal
+如果obj1插入后,再改变obj1/field/导致hashcode改变，那么hmap.contains(obj1)是找不到的
+即使制造一个obj2其hashcode=原obj1，但是equals!=原obj1，查找也会失败
+原因: 造成原hashcode命中不了bucket,但是原object还在bucket对应的存储区域    
+## singleton
+```
+// Java code to create singleton class by
+// Eager Initialization
+public class GFG
+{
+// public instance initialized when loading the class
+private static final GFG instance = new GFG();
+
+private GFG() {
+	// private constructor
+}
+public static GFG getInstance(){
+		return instance;
+	}
+}
+or lazy
+public class GFG
+{
+  // private instance, so that it can be
+  // accessed by only by getInstance() method
+  private volatile static GFG instance;
+ 
+  private GFG()  {   }
+ 
+  public static GFG getInstance()
+  {
+    if (instance == null) {
+      //synchronized block to remove overhead
+      synchronized (GFG.class)  {
+        if(instance==null) {
+          // if instance is null, initialize
+          instance = new GFG();
+        }
+      }
+    }
+    return instance;
+  }
+}
+
+```
+## JVM
+### class loader 类加载器
+, Bootstrap ClassLoader、Extension ClassLoader、AppClassLoader 和URLClassLoader，他们的作用其实从名字就可以大概推测出来了。其中AppClassLoader在很多地方被叫做System ClassLoader 
+双亲委派模型=>都是保证object被最顶端的加载器加载
+JNDI->线程上下文加载，加载厂商的的jar
+
+### GC
+CMS(concurrent mark-sweep), 
+G1降低停顿， garbagefirst
+
 # python
 list & tuple
 heap
 partition(seq: list[int])
+
+
+
 
 # 被5或7整除
 什么垃圾题
@@ -176,3 +234,30 @@ int main()
 }
 
 ```
+
+
+# python
+why python is dynamically typed programming
+monkey patching=>redirect func=>replace libs in place(runtime)
+mutable/immutable data type=>list,set,dict
+concatenate 2 tuple
+context manager(with xxx.open)
+handle exception in python=>try,except,else,finally
+dunder methods=>__add__,__multiply__
+lambda func=>anonymous
+shallow copy, deep copy=>copy.deepcopy()
+GIL
+namespace, mynamespace/pack1/__init_.py,pack2/__init__.py=>from mynamespace import subpackage_a
+@classmethod, fun(cls), @staticmethod,(not access cls state)
+middle,django?
+numpy, pandas ?
+pyspark
+SQL
+
+==
+a=5;fun():global a,a=xxx
+yield
+generator
+decorator
+__iter__
+继承 class A(B)

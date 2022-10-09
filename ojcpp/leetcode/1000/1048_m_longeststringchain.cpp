@@ -1,44 +1,38 @@
-/*
-Given a list of words, each word consists of English lowercase letters.
+#include <iostream>
+#include <vector>
+#include <unordered_map>
 
-Let's say word1 is a predecessor of word2 if and only if we can add exactly one letter anywhere in word1 to make it equal to word2. For example, "abc" is a predecessor of "abac".
+using namespace std;
 
-A word chain is a sequence of words [word_1, word_2, ..., word_k] with k >= 1, where word_1 is a predecessor of word_2, word_2 is a predecessor of word_3, and so on.
+class Solution {
+public:
+    int longestStrChain(vector<string>& words) {        
+        sort(words.begin(),words.end());
+        unordered_map<string,int> m;
+        for (auto & it:words) {
+            cout<<it<<endl;
+            m.insert(pair(it,1));
+        }
+        
+        int ans=1;
+        for (auto &s:words) {
+            int n = s.length();           
+            for (int i=0;i<n;i++) {
+                // TODO add handle char at begin or end;
+                // loop the each char of the string, take out one char and construct a new str
+                // e.g. bda=> da,ba,bd
+                auto newStr = s.substr(0,i) + s.substr(i+1);
 
-Return the longest possible length of a word chain with words chosen from the given list of words.
-
- 
-
-Example 1:
-
-Input: words = ["a","b","ba","bca","bda","bdca"]
-Output: 4
-Explanation: One of the longest word chain is "a","ba","bda","bdca".
-Example 2:
-
-Input: words = ["xbc","pcxbcf","xb","cxbc","pcxbc"]
-Output: 5
-*/
-
-// #include <codech/codech_def.h>
-// using namespace std;
-// namespace {
-//     class Solution {
-//     public:
-//         int longestStrChain(vector<string>& words) {
-//             unordered_map<int,list<string>> lengthMap;
-//             int maxl = 0;
-//             for (auto &it:words) {
-//                 int l=it.length();
-//                 lengthMap[l].push_back(it);
-//                 maxl = max(maxl, l);
-//             }
-//             for () {
-                
-//             }
-
-
-//         }
-//     };
-
-// }
+                // search if da, ba, bd is already in map            
+                if (m.count(newStr)) {
+                    // e.g ba is in the map, and ba=2                
+                    // ba(1) =>b(1)=>found `b` in map, ba=>2, 
+                    // ba(1) =>a(1)=>found `a` in map, ba=>2                    
+                    m[s] = max(m[s], 1+m[newStr]);
+                }
+            }
+            ans=max(ans,m[s]);
+        }
+        return ans;
+    }
+};

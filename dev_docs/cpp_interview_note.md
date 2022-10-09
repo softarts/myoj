@@ -627,9 +627,44 @@ streaming 的理解
 
 
 
-# 优化
-优化过程
-工具
+# linux 性能优化
+参考linux 性能优化， 工具
+top,htop,平均负载, uptime, ps,
+pidstat，常看进程cpu具体信息(sysstat包里)
+mpstat (disk，看到iowait), iostat
+vmstat 分析系统的上下文切换和内存, in中断次数,cs上下文切换次数, r就绪队列 b 不可中断睡眠状态进程数
+dstat =vmstat,iostat,ifstat, 僵尸进程
+strace， 系统调用
+stress 模拟负载
+sysbench 模拟多线程调度瓶颈
+netstat 可以看到网络的队列
+sar 网络
+/proc/cpuinfo
+/proc/interrupts
+/proc/stat各项统计 
+/proc/softirqs 软中断
+systemtap
+linux-perf cpu采样,花费最多时间
+execsnoop 针对短寿命的进程
+ptree 进程树
+
+内存中的buffer(raw disk)/cache(fileio)
+cachestat/cachetop (bcc)查看缓存的情况
+pcstat 指定文件在缓存中大小
+dd 用于测试对文件的读写 O_DIRECT绕过系统缓存
+memleak（bcc） 可以跟踪系统或指定进程的内存分配，释放请求
+swap => kswapd0 内核线程来定期回收内存, numa结构，每个都有自己的内存
+pmap 进程内存空间工具
+
+c23
+## 最重要的几个工具
+top,vmstat,pidstat
+
+## java调试
+GDB + 配置
+
+page211
+
 
 # 术语
 Square bracket 方括号

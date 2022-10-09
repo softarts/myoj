@@ -158,10 +158,7 @@ web backend/frontend, 主要是UI操作，设置，查找，对比，导出之�
 并非primary/slave的模式，而是worker的方式=>是否有现成的库?=>
 
 集群数据传递=>kafka
-
 KV GRPC => 对底层SDK在做跨网络调用时的封装
-
-
 
 ### GRPC
 client 侧,channel, stub
@@ -176,6 +173,36 @@ http2/protobuf，二进制，可以快速过一下，以后围绕这个
 人脸图，场景图，视频
 专有格式，二进制，写的时候就是加密数据，使用密钥，文件以mmap 文件系统的方式加载
 互操作，使用python sdk(pybind11可以调用C++ api)读取
+
+
+### 对SDK的封装
+raw API改写为高层的SDK
+目标，线程安全，提高吞吐量(batch)，控制时延
+以人脸为例，有几个步骤:
+- 预处理，矫正图片，把人脸放在中间，肩膀比例
+- 抽取特征因子
+- 对比,1:1,1:N
+
+资源管理(这里必然有一些全局的共享数据)，选择需要的GPU，分配计算任务
+还有node节点一个级别的资源管理, 所谓任务是无状态，但是之间有一个piepeline，流水线
+
+(GPU)底层的cuda context是线程安全的。cducnn之类
+copy memory->cuda->copy back
+摄像头=>opencv, cuda
+
+线程池-参照boost-threadpool 或者threadexecutor做的in-house, fixed size,做分发
+async 可能来自pool, thread则是创建线程(overhead)
+同步:mutex, 
+concurrent_hashmap锁=>分段及细粒度的锁，读写锁之类
+
+
+### TBB 
+task based programming, scheduler 适合基本没有阻塞的task,如果阻塞在IO上或者等待mutex，那并不适合
+因为coroutine可以switch,而这个并不可以
+fork-join pattern
+基本上只适合纯计算任务
+
+
 
 
 

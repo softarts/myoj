@@ -7,7 +7,88 @@
 Spring Boot+SQL/JPA实战悲观锁和乐观锁
 https://segmentfault.com/a/1190000017410662
 
-乐观锁，悲观锁
+# 数据库
+一些基础数据库知识
+Some question about general database knowledge, e.g. shared lock, exclusive lock, dirty read, transaction, 乐观锁，悲观锁
+
+## 乐观锁悲观锁
+例如多个用户同时并发在一个短视频评论时，他们需要
+1. 拿到ArticleID和评论数字
+2. 插入对应的Comment
+3. 更新评论数量保存到数据库
+由于他们是同时在步骤1拿到的评论数量，所以在第三步更新的评论数+1是错的。
+
+**乐观锁**
+
+乐观锁顾名思义就是特别乐观，认为自己拿到的资源不会被其他线程操作所以不上锁，只是在插入数据库的时候再判断一下数据有没有被修改。所以悲观锁是限制其他线程，而乐观锁是限制自己，虽然他的名字有锁，但是实际上不算上锁，只是在最后操作的时候再判断具体怎么操作。
+
+乐观锁通常为版本号机制或者CAS算法
+```
+JPA
+@Data
+@Entity
+public class Article {   
+    @Version
+    private Long version;
+}
+其它都一样,修改失败直接抛出异常 ObjectOptimisticLockingFailureException
+// CommentService
+public void postComment(Long articleId, String content) {
+    Optional<Article> articleOptional = articleRepository.findById(articleId);
+    article.setCommentCount(article.getCommentCount() + 1);
+    articleRepository.save(article);
+}
+
+或者手动增加column version
+public interface ArticleRepository extends CrudRepository<Article, Long> {
+    @Modifying
+    @Query(value = "update article set comment_count = :commentCount, version = version + 1 where id = :id and version = :version", nativeQuery = true)
+    int updateArticleWithVersion(Long id, Long commentCount, Long version);
+}
+```
+
+**悲观锁**
+需要查询的时候把该行锁住
+使用lock或者SQL中加入FOR UPDATE
+```
+JPA 
+public interface ArticleRepository extends CrudRepository<Article, Long> {
+    @Lock(value = LockModeType.PESSIMISTIC_WRITE)
+    @Query("select a from Article a where a.id = :id")
+    Optional<Article> findArticleWithPessimisticLock(Long id);
+}
+
+或者Query中手动加入 for update
+public interface ArticleRepository extends CrudRepository<Article, Long> {
+    @Query(value = "select * from article a where a.id = :id for update", nativeQuery = true)
+    Optional<Article> findArticleForUpdate(Long id);
+}
+```
+
+**实践**
+一般来说是两步操作,1.取得数据，2 该数据+1(或者其他操作) 3.写回数据库
+这个过程需要加锁
+如果说直接把数据写回去，好像不需要，写的时候会带锁,不可能出现分别写一列的情况
+
+
+
+
+
+## 锁
+个人认为锁与事务的隔离级别不存在任何关系，但是我们有时候经常被这两个概念弄混淆。
+锁与事务隔离级别都是为了保证在多线程并发环境下，数据访问的安全性。当时事务交叉执行时，如果不设置事务的隔离级别(事务存在还有意义吗？)，那么数据将会被不同事务轮访问和修改，执行结果无法预期。
+
+读锁（共享锁）：相互不阻塞，可以在同一时刻读取同一个资源，即在同一个资源上可以同时添加多个读锁。
+写锁（排他锁）：阻塞其他读锁或写锁，独占资源，在给定的时间内只允许一个用户写入。
+锁粒度：加锁对象（资源）的大小。锁粒度的大小影响的系统的并发性和系统开销。当锁粒度较小，可以提高资源的并发使用，但是也增加的系统加锁的开销。反之，锁粒度越大，并发度越低，
+表锁（table locks）：在整张表上进行加锁，如MyISAM引擎。
+行锁（row locks）：在表中的一行或者多行数据记录上加锁。
+页锁（page locks）：目前只有BDB存储引擎使用。
+元数据锁（Metadata Locks）：MySQL5.5中引入，应用在表的metadata上。当一个线程使用表的时候，将会锁定整张表的metadata信息，不允许其他线程修改表结构。
+
+
+1、加锁与解锁时机：当开始执行SQL，将会对一些数据进行加锁，如整个表，某些行，metadata信息。当sql执行完成，将会解锁，其他线程就可以开始申请使用资源。
+2、MySQL事务特性是由存储引擎提供的，如常用的InnoDB。一个事务由一个或者多个SQL组成，事务的隔离性进一步确保在多线程并发环境下数据的安全访问，直接决定事务中sql修改的数据在提交之前是否对其他事务是否可见。
 
 
 
@@ -15,6 +96,147 @@ https://segmentfault.com/a/1190000017410662
 这里有很多东西，确实可以结合AWS写一下，包括trust bank的实践
 - 使用缓存和数据库时带来的同步问题
 - 使用HA cluster时遇到的脑裂问题
+
+## c5数据复制
+aws rds 主从同步复制，只读副本异步复制
+但是postgres,mysql等主从复制 是异步，这样master无需等待slave, MySQL5.5半同步，保证至少一个slave复制
+kafka的leader+follower有所不同，ack是同步等待的
+
+DDIA 指出
+同步复制 - 单点故障导致整个同步失败
+异步复制 - 是一个不太靠谱的实现，缺点为副本的滞后问题,以及如果主节点失效，而所有从节点都没有更新数据
+半同步 - 一个节点是同步复制，另外的是异步
+
+现实
+AWS RDS multi-az, 一个standby节点采用同步复制，用于做primary的备份，别的只读副本采用异步复制方式，正好就是半同步方式
+由于异地多活这种地理环境的影响，很多数据库还是采用异步复制的
+
+主节点失效
+AWS RDS从standby提升为主节点，这个保证是同步的
+
+### 复制日志的实现
+- 语句, 用户自定义的函数有副作用
+- WAL预写日志，这个在磁盘块level
+- 基于行的逻辑日志复制，复制和存储的逻辑分离(binlog)
+- 触发器的复制
+
+### 场景
+**写后读**
+- 可能被修改的内容，从主节点读，否则从只读副本;
+
+- 如果无法做到这点，则需要更多的应用层方案解决，比如最近更新时间（版本号）或者客户端带上要求的最新时间
+但是一般客户端配置的是固定的read-replica,如何在不同的read-replica切换？需要客户端实现
+实际上知道最新时间戳也有难度，如果是在另一台设备上更新数据 => 基本上只有通过一个全局节点/元数据(即primary node)
+
+**单调读**
+即保证每一次读必须在上一次读之后，不允许数据回滚。解决=>从固定的一个副本读取
+
+
+**前缀一致读**
+写入的顺序和读出的顺序保持一致，但是如果是multi-master的数据库，就不存在固定的写入顺序
+一般通过单primary来解决
+
+**多主节点同步**
+AWS aurora采用的是底层存储分成多块，不仅是同一行，写到同一块的数据都会造成冲突，这个冲突交给应用层来解决
+多主节点multi-master没有所谓的faiover，因为所有节点都可以写
+multi-master一般用于multi-region的方案，即用户只读取离自己近的数据中心
+
+DDIA的多主节点同步解决方案
+基于时间戳，最后写入者作为最终数据；合并串联所有写入数据,按优先级/ID来决定谁写入有效=>丢失数据
+
+由应用层来解决：
+使用事务,对于银行等交易
+保存所有写入数据，然后在读取时全部返回给用户
+
+并发写还有些补充
+- 不保存所有写，只有先写入的成功，其它的返回失败
+- 最后写入获胜，丢弃其它(不合理)
+
+基于版本号的写入，从而指导依赖关系
+
+
+**无主节点复制**
+dynamodb 所有副本可以接受客户的写请求？
+设想,客户==>写到所有副本1,2,3(down)， 从所有副本读取，从而发现某些副本的版本号比较新(rocksdb的额外实现？)
+
+
+**quorum**
+节点失效之后的修复
+n（个数）,w,r之类的配置，来法定读或写是否有最新值/成功的仲裁?
+在dynamo系列的数据库中采用 sloopy quorum, Riak,cassandra,Voldemort
+
+
+## c6 数据分区
+
+## c7 事务
+**ACID**
+原子性 一致性 隔离性 持久性
+DDIA 中认为ACID有点像营销概念
+- 原子性 客户端一个写操作包括多个步骤，如果其中一个失败时如何看待.基本上者需要数据库给出什么操作是原子性，没有中间状态
+- 一致性，通过原子性，隔离性来达到一致性。这是应用层的概念，C不应属于ACID
+
+### 弱隔离级别导致企业审计问题
+首先
+1. 未提交读(Read Uncommitted):事务中的数据修改，即使事务未提交，对其他事务也是可见的。事务可以读取未提交的数据，也称为“脏读”。
+其实根本不算是一种隔离级别，它属于无隔离
+
+**1. 读-提交**
+最基本的隔离级别， =>等同于下面的2, oracle, postgres, SQLserver, MemSQL, MySQL default配置
+实现:
+维护一个旧的值和当前正在修改的事务的新值
+
+**2. 快照级别隔离**
+有点像可重复读
+阻止同一对象上的其它事务操作， 但是是真的阻止还是只是单纯的忽略？
+实现，使用MVCC，保存了多个版本
+事务开始时，列出所有进行中的事务id，而较晚事务的id全部被忽略
+
+**如何索引MVCC多版本数据**
+- 追加btree
+- postgres保存在同一页
+
+**解决并发写的问题**
+参考前面的乐观锁悲观锁， 例如两个医生同时请假造成无人值班问题=>事务施加在多对象上
+
+**3. 串行化**
+靠应用层/事务无法解决时
+通过存储过程来实现,但是每家都有自己的存储过程语言:oracle PL/SQL, SQLSERVER T-SQL, postgres PL/pgSQL
+现在 redis->lua, voltdb->java/Groovy, Datomic->java/Clojure
+
+对数据分区，即水平扩展
+支持跨区事务，但是占比很小
+
+### 四种隔离级别
+参考
+https://blog.csdn.net/fanrenxiang/article/details/102650127
+
+级别
+ 1. 未提交读(Read Uncommitted):事务中的数据修改，即使事务未提交，对其他事务也是可见的。事务可以读取未提交的数据，也称为“脏读”。
+ 2. 提交读(Read Committed)：事务开始时，只能看见已提交事务的修改。换句话说，一个事务从开始到提交之前，所作的任何操作对其他事务是不可见的。但是如果在事务执行过程中，有其它事务提交修改，那么前后两次读取相同记录的结果不相同（不一致），也称作不可重复读（nonrepeatable read）受其他事务影响
+ 
+ 3. 可重复读(Repeatable Read)：事务中前后两次读取相同记录的结果是一致的，即使有事务提交。(不受别的事务提交的影响)。可重复读可以解决脏的问题，但是存在幻读（Phantom Read）的问题:当事务在读取某个范围内记录的时候，如果另外一个事务插入了新的数据记录，之前的事务中再次读取该范围内的数据记录，那么将会产生幻行（Phantom Rows）。或者幻读问题。 
+ ==>解决： InnoDB通过使用多版本并发控制MVCC解决了幻读的问题。
+
+ 4. 可串行化(Serializable)：事务串行化执行。
+
+
+常见的几个问题解决方案
+1. 脏读 ->1 使用 提交读隔离级别
+2. 不可重复读  ->2提交读隔离级别, 开启事务后会看到2次不同的结果,事务A在事务B提交前后读取到不一样的数据,
+3. 幻读 -> 幻读是事务非独立执行时发生的一种现象。例如事务T1对一个表中所有的行的某个数据项做了从“1”修改为“2”的操作，这时事务T2又对这个表中插入了一行数据项，而这个数据项的数值还是为“1”并且提交给数据库。即T2并不知道数据库的版本已变更
+解决： MVCC 3 多版本。 (与2相比侧重于innsert/delete操作)
+4. 何为幻行?
+
+
+### 两阶段加锁
+2PL =>2 phase lock
+有点像第二阶段，要修改的话必须把锁提升到写锁, 性能问题
+
+谓词锁 - 作用在某些条件下的对象
+索引区间锁, 如以时间为条件， 将锁挂到索引上-> select from where xxx for update??
+
+### 可串行化的快照隔离
+是一种乐观并发控制，在提交时检查某些外部依赖数据是否已被更改
 
 
 ## rabbitMQ/aerospike脑裂 split brain

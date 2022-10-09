@@ -14,7 +14,7 @@ using namespace std;
 // Input: nums = [1,2,3], k = 3
 // Output: 2
 
-// 这个题目和523类似， 
+// 这个题目和523类似，以及1048? 太精彩了,利用hashmap来递推 
 // 使用一个字典保存数组某个位置之前的数组和，然后遍历数组求和，
 // 这样当我们求到一个位置的和的时候，向前找sum-k是否在数组中，
 // 如果在的话，更新结果为之前的结果+(sum-k出现的次数)。同时，当前这个sum出现的次数就多了一次。
@@ -38,3 +38,15 @@ public:
         return ans;
     }
 };
+
+// int subarraySum(vector<int>& nums, int k) {
+//         int ans = 0;
+//         unordered_map<int,int> m{{0,1}};
+//         int sum = 0;
+//         for (size_t i=0;i < nums.size();i++) {
+//             sum += nums[i];
+//             ans += m[sum-k];
+//             m[sum]++;
+//         }
+//         return ans;  
+//     }
