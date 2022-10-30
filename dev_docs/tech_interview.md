@@ -1924,25 +1924,24 @@ treemap如何搜索
 
 
 
-
-
 # 2022 的面试
 ubiquant 九坤
 笔试 lc198,36,以及一个IPC,两个service同步的设计题
 
 1面
 自我介绍->经历，技术栈
-kv项目介绍一下->对rocksdb的二次开发，基于grpc做了网络层，集群规模，这里扯了半天grpc(TODO**补充点grpc的信息**)
-=>最近没有多少关于c++的项目，一直提kv是否合适??**是否整理下语音项目**
+kv项目介绍一下->对rocksdb的二次开发，基于grpc做了网络层，集群规模，这里扯了半天grpc(TODO**补充点grpc的信息=>done**)
+=>最近没有多少关于c++的项目，一直提kv是否合适??**是否整理下语音项目=>done**
 写过的socketserver是什么->核心是一个视频直播,上面基于protobuf封装了command和data两类数据，视频走udp(TODO**这里补充一点boost asio的信息**)
 对内存使用的理解->开始扯了一堆tbb的内存对齐,false sharing,裸指针，内存corruption，自制memory pool,tcmalloc的问题,还有最近在上层的jvm的调优（另一个角度),针对高频和中低频的优化也不一样TODO**这个有点难写**
 对跳槽的看法->对行业公司看好，对自己也有利
 对工作压力的看法->早上还在交付，依图卷
 爱好，特长->瞎扯
-夏普比率和最大回撤->说成是和beta的对比，其实应该是无风险资产及波动性，还提了下option，多因子，深度学习, cluster聚类,macd,这块讲得有点过头了，应该再谦虚点
+夏普比率和最大回撤->说成是和beta的对比，其实应该是无风险资产及波动性，面试官对此有点不满.还提了下option，多因子，深度学习, cluster聚类,macd,这块讲得有点过头了，应该再谦虚点,
 关于quant平台->自由展开讲了下,quantopian,指出backtest更为重要，但都属于自由发挥扯谈，很难说对方接受度如何
 
 算法题类似 lc210 courseschedule,但是没有给定义，写得还行
+一面是开发的老板
 
 2面
 2+hr,2022/9/28
@@ -1959,7 +1958,28 @@ concurrenthashmap实现=>分段锁，其余不知道
 如何解决和别人的分歧,说服和被说服 =>使用parser来分析配置数据,业务和技术的角度上说服别人接受自己的方案.这个回答没什么新意，令人耳目一新.
 
 交付=>一般sprint 2week,bugfixing一天能解决，但是肯定不需要改动太多代码,介绍了银行的流程，包括unit test, e2e,test evidence,rollback 比较繁琐。能否快速上线，比如一天内？=>
+2面是devops和quant的老板
 
+3面
+HR
+自我介绍=>这里有点废话，应该再简短一点
+为什么跳槽
+遇到过的挑战=>适应不同的企业文化
+入职后怎么适应
+现在的公司怎么考核
+写周报可以吗
+问题=>1.九坤的组织架构，按业务划分还是按职业划分， 2.展望新加坡的情况，保密， 3.新加坡与国内的协作，没讲啥
+
+总结，还是有些啰嗦，需要回答再简短，总结性一点，例如使用star框架
+situation
+task
+action
+result
+
+
+4面 和doutzen yang 聊天
+你对这个职位怎么看，是否希望推进...跟她扯了一堆废话,她说你别啰嗦了
+后面就是聊薪资，随便聊
 
 
 ## boa
@@ -2320,8 +2340,8 @@ C++的项目?
 看着上面的文章有点扯蛋，思考下最近的重点
 - payment,openid, trustbank
 - aws sa-pro
-- c++/lc/interview, uiquant,hrt, millennium?,citadelsec,baml,ms,gic,aws,jpm
-- diad 数据密集型app design,system design-alex
+- c++/lc/interview, ubiquant,hrt, millennium?,citadelsec,baml,ms,gic,aws,jpm
+- ddia 数据密集型app design,system design-alex
 另外
 kotlin + leetcode 不可行,版本太低，还是坚持c++
 
@@ -2329,14 +2349,31 @@ GS: website -> x 很多职位关了
 GIC: website ->?
 BOA: agent yalian -> 9/27
 JPM: twr -> x ?
-ubiquant: agent suyu -> 9/28
+ubiquant: agent suyu -> offer?
 MSFT: mycareers ->?
 MS: agent roxy ?
 tower: ->
-HRT:
-nomura: ->
+HRT:->
+nomura: -> x?
 partio: ->?
 
+## company
+- trading
+tower-research, jump trading, millennium, worldquant,squarepoint, hrt, exoduspoint, headslands,citadel,virtu financial, mako，drw, alphagrep, optiver,janestreet,schonfeld,Balyasny, novaprospect，presto(korea)
+- crypto
+okx, bullish, partior,tron,kbit, crypto.com,bitdeer,matrixport,wechain(bybit)
+- Bank
+scb,boa,jpm,gs,dbs,uob,ocbc,gic,ms,nomura,trust,deutsche,barclays,ubs,citi,creditsussie
+- internet
+bytedance,shopee,tencent,alipay,lazada,alicloud,funp,mihoyo,fb,google,msft,amazon,wise,stripe,apple,grab,gojek,twitter,
+- other
+keysight,singtel,qualcomm,bloomberg,huawei,sourced,emc,ibm,redhat,thoughtswork
+
+>(2022)
+mycareersfuture上的数据并不准确，还是公司网站比较准确，然后去linkedin勾搭
+几个头部trading公司都在18/20k以下，比较高的(22-25k)有optiver,exoduspoint,schonfeld
+大部分银行的VP上限都是18-20k,boa的能到25k, dbs svp能到28k，但上限可能拿不到
+腾讯T10的一个参考是16k+120k/4 RSU(254k),字节3-1可能是18k+RSU，
 
 ## payment
 https://blog.bytebytego.com/p/payment-system
@@ -2344,20 +2381,20 @@ payment-service <---> outside payment service provider (paypal,stripe,adyen)
 fis-opf payment product, 支持fast API
 
 ## leetcode 分类精选
-array: 159(最长不重复子串hashmap),523(yitu),560(子数组和),763, 953(aliendict,fb),1048(longestchain,boa),
-
+array: 159(最长不重复子串hashmap),436(treemap), 523(yitu),560(子数组和),763, 953(aliendict,fb),1048(longestchain,boa),
+string: 331(getline,这题严格讲不属于树), 1209(移除相邻重复项)
 backtracking: 17
 动态规划： 53(AD,bytedance多次),55(jumpgame)91(decodeways), 198(robber), 198,322(硬币组合), 1143(最长公共子序列)
 
 图: 207
 并查集:547, 261(lint178)
 
-bfs:964
+bfs:365(杯子取水),964
 dfs: 212(TLE)
 
-栈,slidewwindow:1944, 862, 2104(单调栈)
+栈,slidewwindow:224(calculator), 385(解释一个嵌套数组), 862, 1944(people in queue),2104(单调栈)
 
-树:98(验证bst),236, 
+树:98(验证bst),113(pathsum2),236(LCA of tree), 
 
 
 数学，位操作: 204(prime), 258(add_digits),260(xor)

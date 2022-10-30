@@ -643,10 +643,15 @@ sar 网络
 /proc/interrupts
 /proc/stat各项统计 
 /proc/softirqs 软中断
+/proc/meminfo
 systemtap
 linux-perf cpu采样,花费最多时间
 execsnoop 针对短寿命的进程
 ptree 进程树
+slabtop 用于目录项和索引节点的缓存
+lsof
+filetop(基于eBPF) 主要跟踪内核中文件的读写情况，输出线程ID,TID
+opensnoop
 
 内存中的buffer(raw disk)/cache(fileio)
 cachestat/cachetop (bcc)查看缓存的情况
@@ -656,9 +661,21 @@ memleak（bcc） 可以跟踪系统或指定进程的内存分配，释放请求
 swap => kswapd0 内核线程来定期回收内存, numa结构，每个都有自己的内存
 pmap 进程内存空间工具
 
-c23
+
 ## 最重要的几个工具
 top,vmstat,pidstat
+
+## c23 文件系统
+VFS=> Ext4,XFS,ZFS,NFS等等，都是同一套API
+df -i 列出索引节点
+得到所有目录项和各种文件系统索引节点的缓存情况
+```
+cat /proc/slabinfo | grep -E '^#|dentry|inode'
+```
+非/阻塞IO,异步/同步
+
+IO调度算法: NONE, NOOP,完全公平调度器CFQ, deadline
+对于disk,有kB_rd,kB_wr等
 
 ## java调试
 GDB + 配置
