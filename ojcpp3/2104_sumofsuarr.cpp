@@ -4,6 +4,17 @@
 #include <functional>
 using namespace std;
 
+/*
+[1,2,3]可以组成6个子数组
+[1], range = largest - smallest = 1 - 1 = 0 
+[2], range = 2 - 2 = 0
+[3], range = 3 - 3 = 0
+[1,2], range = 2 - 1 = 1
+[2,3], range = 3 - 2 = 1
+[1,2,3], range = 3 - 1 = 2
+求出所有子数组的range的和(sum)
+这题再做一次干不出来
+*/
 // brute force
 class Solution0 {
 public:

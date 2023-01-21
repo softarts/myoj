@@ -1,6 +1,8 @@
 
 /*
 Given an integer n, count the total number of digit 1 appearing in all non-negative integers less than or equal to n.
+TODO 有空再写个暴力解题法
+
 */
 #include <cstring>
 using namespace std;
@@ -8,6 +10,7 @@ using namespace std;
 class Solution {
 public:
     // pos, count, limit, 需要对limit进行区分，因为允许的取值范围不一样
+    // dp[3][1][0]指第三位,当前面（左侧）1的个数为1，无limit限制时的digit为1的数字的个数 
     // 21345， 当前面为21的时候,3有limit,只能取0～3，dp[3][count][limit=1] = x
     // 当前面是其他数字，3位没有limit,可以取0~9, dp[3][count][0] = y
     // 上面可以看出for loop的范围不一样(ub),那么res的值肯定不同

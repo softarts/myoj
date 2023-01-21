@@ -11,7 +11,7 @@
  */
 
 /*
-妈呀这居然能直接AC
+妈呀这居然能直接AC， 和亚麻的题有点类似
 */
 #include "../common.h"
 using namespace std;

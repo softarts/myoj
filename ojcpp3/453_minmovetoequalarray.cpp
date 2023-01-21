@@ -17,6 +17,7 @@ In each move, we can increase all n-1 elements by one. We should never choose to
 So in each move, we need to decrease the current max element by one to util every elements become min element.
 The problem become: count difference between other elements with our min element in the array.
 
+死记， 反向考虑
 */
 class Solution {
 public:

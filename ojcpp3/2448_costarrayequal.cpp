@@ -13,6 +13,7 @@ It can be shown that we cannot make the array equal with a smaller cost.
 每一个元素都有cost,如何找到平衡点？
 不太像dp，没有子状态,
 二分查找比较接近？high and low?
+https://leetcode.cn/problems/minimum-cost-to-make-array-equal/solution/by-endlesscheng-i10r/
 */
 class Solution {
 public:
