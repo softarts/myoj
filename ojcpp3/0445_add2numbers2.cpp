@@ -18,9 +18,9 @@ using namespace std;
   => 7-8-0-7
 
 套路：
-1. 用stack
+1. 用stack 不太好
 2. 可以用递归?  NO!
-
+2 先逆序    
  */
 class Solution {
 public:

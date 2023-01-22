@@ -17,6 +17,7 @@ The right interval for [1,2] is [2,3] since start1 = 2 is the smallest start tha
 [[1,12],[2,9],[3,10],[13,14],[15,16],[16,17]]
 建立一个treemap,key 为start,value为index=> m[1]=0,m[2]=1，使用map,因为强调了start point of interval是unique的
 在具体搜索的时候，以endpoint的lower_bound查找（即equal or greater)
+2022/10/22
 */
 class Solution {
 public:
