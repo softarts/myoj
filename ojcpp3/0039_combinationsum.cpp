@@ -3,6 +3,7 @@
 
 using namespace std;
 /*
+找出所有sum为target的组合
 [2 3 6 7] ==>7,output [2,2,3] [7]
 基本上是深度搜索
 先排序
