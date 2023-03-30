@@ -9,7 +9,7 @@ function magicalString(n: number): number {
         const last = arr[arr.length-1]
         if (cur===2) {
             if (last===2) {
-                arr.push(...[1,1])
+                arr.push(...[1,1]) // ... 展开数组
             } else {
                 arr.push(...[2,2])
             }
