@@ -1,3 +1,4 @@
+
 /*
 You are given an array of words where each word consists of lowercase English letters.
 
@@ -26,9 +27,32 @@ Input: words = ["abcd","dbqca"]
 Output: 1
 Explanation: The trivial word chain ["abcd"] is one of the longest word chains.
 ["abcd","dbqca"] is not a valid word chain because the ordering of the letters is changed.
+
+
+dp 的思路
  */
+import java.util.*;
+
 class Solution {
     public int longestStrChain(String[] words) {
-
+        // 必须先排序, 按照长度而不是alphabetical
+        Arrays.sort(words, (a, b) -> a.length() - b.length());
+        // Arrays.sort(words);
+        Map<String, Integer> dp = new HashMap<>();
+        int ans = 0;
+        // 然后依序更新每个元素所在的dp
+        for (String w : words) {
+            dp.put(w, 1);
+            for (int i = 0; i < w.length(); i++) {
+                StringBuilder sb = new StringBuilder(w);
+                sb.deleteCharAt(i);
+                String prev = sb.toString();
+                if (dp.containsKey(prev)) {
+                    dp.put(w, Math.max(dp.get(w), dp.get(prev) + 1));
+                }
+            }
+            ans = Math.max(ans, dp.get(w));
+        }
+        return ans;
     }
 }
