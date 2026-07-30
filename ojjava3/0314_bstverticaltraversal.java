@@ -64,14 +64,18 @@ public class Solution {
      */
     public List<List<Integer>> verticalOrder(TreeNode root) {
         List<List<Integer>> ans = new ArrayList<>();
+        Map<Integer, List<Integer>> map = new HashMap<>();
+
         Deque<Pair> queue = new ArrayDeque<>();
         queue.offer(new Pair(root, 0));
         while (!queue.isEmpty()) {
             Pair p = queue.poll();            
-            
-            ans.computeIfAbsent(p.column,k->new ArrayList<>())
-            
+            map.computeIfAbsent(p.column,k->new ArrayList<>());
+            map.get(p.column).add(p.node.val);
+            if (p.node!=null) queue.offer(new Pair(p.node.left, p.column-1);
+            if (p.node!=null) queue.offer(new Pair(p.node.right, p.column+1);            
         }
+        
         return ans;
     }
 }
