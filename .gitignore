@@ -25,3 +25,4 @@ out
 .vscode/settings.json
 golang/golang
 *.class
+*.iml

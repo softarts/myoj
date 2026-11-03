@@ -29,12 +29,12 @@ Explanation: The trivial word chain ["abcd"] is one of the longest word chains.
 ["abcd","dbqca"] is not a valid word chain because the ordering of the letters is changed.
 
 
-dp 的思路
+dp 的思路 boa 2022
  */
 import java.util.*;
 
 class Solution {
-    public int longestStrChain(String[] words) {
+    public int longestStrChain0(String[] words) {
         // 必须先排序, 按照长度而不是alphabetical
         Arrays.sort(words, (a, b) -> a.length() - b.length());
         // Arrays.sort(words);
@@ -54,5 +54,27 @@ class Solution {
             ans = Math.max(ans, dp.get(w));
         }
         return ans;
+    }
+
+
+    // dp, dp[i]=dp[i-1]+1
+    // 使用stringbuilder 来做字符操作
+    public int longestStrChain(String[] words) {
+        Arrays.sort(words, (a,b)-> a.length() - b.length());
+        Map<String, Integer> dp = new HashMap<>();
+        int answer = 0;
+        for (String w: words) {
+            dp.put(w, 1);
+            for (int i = 0; i < w.length(); i++) {
+                StringBuilder sb = new StringBuilder(w);
+                sb.deleteCharAt(i);
+                String prev = sb.toString();
+                if (dp.containsKey(prev)) {
+                    dp.put(w, Math.max(dp.get(prev)+1, dp.get(w)));
+                }    
+            }
+            answer = Math.max(answer, dp.get(w));
+        } 
+        return answer;
     }
 }
