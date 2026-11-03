@@ -26,3 +26,4 @@ out
 golang/golang
 *.class
 *.iml
+.DS_Store
