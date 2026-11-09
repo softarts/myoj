@@ -77,6 +77,30 @@ class Node {
 };
 */
 
+/*
+利用XOR
+1 XOR 1 = 0
+5 XOR 6 = 1 
+
+异或运算（XOR，符号为 ^）的核心特点可以概括为一句话：“相同为 0，不同为 1”。
+在算法和位运算中，它有以下几个极其重要的数学性质和应用特性：
+
+1. 核心数学性质
+
+• 归零律：x ^ x = 0 （任何数和自己异或，结果都是 0）
+• 恒等律：x ^ 0 = x （任何数和 0 异或，结果仍是它本身）
+• 交换律：a ^ b = b ^ a
+• 结合律：(a ^ b) ^ c = a ^ (b ^ c)
+
+2. 为什么它能用来找 N 叉树的根节点？
+
+结合上面的性质，异或运算有一个延伸特性：在一堆无序的数字中，如果某个数字出现了偶数次（比如 2 次），它就会在累加异或的过程中自己把自己抵消掉（变成 0）；而出现奇数次（比如 1 次）的数字则会被保留下来。
+这使得它具备了以下两个独特的应用优势：
+• 顺序无关性：因为有交换律和结合律，无论你先异或哪个节点、后异或哪个节点，最终的计算结果都完全一样。
+• 空间复杂度 \(\mathcal{O}(1)\)：你不需要像哈希表（Set）那样开辟额外的内存去记录谁是谁的子节点，只需要一个变量 val_sum 一路异或到底，就能像“消消乐”一样把所有非根节点全部消去。
+
+这个题和goldman sachs forest其实并不像，那个是并查集
+ */
 class Solution {
     public Node findRoot(List<Node> tree) {
         int x = 0;
@@ -92,6 +116,29 @@ class Solution {
             }
         }
     }
+
+    // 还有一个方法是用hashmap,找出没有parent的就是root
+    static Node findRoot(List<Node> tree)
+    {
+        Map<Node, Node> parents = new HashMap<>();
+
+        // Iterate over each node and its children
+        for (Node node : tree) {
+            for (Node child : node.children) {
+                parents.put(child, node);
+            }
+        }
+
+        // Find the root node by checking for a node without
+        // a parent
+        for (Node node : tree) {
+            if (!parents.containsKey(node)) {
+                return node;
+            }
+        }
+
+        // No root found
+        return null;
 }
 
 

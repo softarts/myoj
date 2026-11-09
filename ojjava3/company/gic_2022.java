@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 /*
+Q1 - 1487? 
 Q1. Device Name System Suggested Problem Name: 
 
 Create unique device names to be used in a residential loT (Internet of Things) system. If a device name already exists in the system, an integer number is added at the end of the name to make it unique. The integer added starts with 1 and is incremented by 1 for each new request of an existing device name. Given a list of device name requests, process all requests and return an array of the corresponding unique device names. 
@@ -23,6 +24,7 @@ public class gic_2022 {
     }
 
 /*
+Q2 559?
 Q2: The Jungle Book / Minimum Groups (HackerRank)
 
 题目描述

@@ -46,7 +46,7 @@ slidewwindow:224(calculator), 385(解释一个嵌套数组), 456(利用栈达到
 98(验证bst),113(pathsum2),230(k smallest element), 236(LCA of tree),450(deletefrombst=codesignal)
  572(subtree), 687(最长相同node的path,和amazon类似)
 
-trietree: codesignal(tree_findsubstring, bt_wordbogger), 208, 1032, 
+trietree: codesignal(tree_findsubstring, bt_wordbogger), 208, 336(palindrome), 1032, 
 
 数学，位操作: 204(prime), 258(add_digits),260(xor),  313(ugly,精彩)
 # 综合
